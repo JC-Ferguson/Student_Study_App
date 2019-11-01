@@ -1,1 +1,26 @@
-<h1>Profile Page</h1>
+<main id="profile">
+  <div class="user_prof">
+    <figure>
+      <%= image_tag @user.image if @user.image.attached? %>
+    </figure>
+    <div class="name_titles">
+      <h1><%= @user.name %></h1>
+    </div>
+  </div>
+  <div class="user_info">
+    <h3><%= @user.description %></h3>
+    <%if @user.special_needs?%>
+        <h3>Education Level: Special Needs</h3>
+    <%else%>
+        <h3>Education Level: <%= @user.education_level.capitalize  %></h3>
+    <% end %>
+    <h3>Subjects:<% @user.subjects.each do |i| %></h3>
+        <p><%= i[:name] %></p>    
+    <% end %>
+    <% if @user.tutor? %>
+        <h3>Price: <%= number_to_currency(@user.tutor.price / 100.0) %></h3>
+    <% end %>
+    <h3>Contact</h3>
+    <h4>email: <%= @user.email %></h4>
+  </div>
+</main>

@@ -1,0 +1,33 @@
+#home {
+    text-align: center;
+    background-image: url(image-path("home/students_pic.jpg"));
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: rgba(114, 34, 34, 0.5);
+
+    div{
+        p {
+            color: rgba(114, 34, 34, 0.5);
+            background-color: rgba(255,255,255,0.5); 
+        }
+    }
+
+    .links {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+
+        div {
+            color: rgb(255, 255, 255);
+            background-color: rgb(0, 0, 0);
+            height: 25vh;
+            width: 20vw;
+            border-radius: 100px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+          }
+      }
+  }

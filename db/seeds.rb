@@ -24,6 +24,7 @@ for i in 1..10
     user.password_confirmation="testing"
     user.classification=rand(0..1)
     user.education_level=rand(0..3)
+    # user.image.attach(io: File.open("app/assets/images/home/students_pic.jpg") ,filename: "students_pic.jpg")
     user.save
     puts "user #{i} created as #{user.classification}"
 

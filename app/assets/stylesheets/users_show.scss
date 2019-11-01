@@ -1,0 +1,43 @@
+#profile {
+    display:flex;
+
+    .user_prof {
+        display:flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background-color:blue;
+        width:35vw;
+        height:100vh;
+
+        figure {
+            height:60vh;
+
+            img {
+                max-width: 100%;
+                max-height: 100%;
+            }
+        }
+
+        .name_titles {
+            display: flex;
+            justify-content:space-between;
+            background-color:red;
+            height: 25vh;
+        }
+    }
+
+    .user_info {
+        display:flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        padding-left: 30px;
+    }
+}
+  
+
+  
+
+  
+  
+  
+  
