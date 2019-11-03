@@ -1,25 +1,31 @@
 <main id="connect">
-  <h1>SSC</h1>
-  <h2>Connecting You</h2>
-  <div class="user">
+    <%= render "/nav_bar" %>
+    <h1>SSC</h1>
+    <h2>Connecting You</h2>
+    <form action="<%= users_path %>" method="GET">
+        <input type="search" name="search" />
+    </form>
+    <div class="user">
         <% @users.each do |user| %>
-            <div>
-                <figure>
-                    <%= image_tag user.image if user.image.attached? %>
-                </figure>
-                <section>
-                    <h3><%= user.name %></h3>
-                    <% if user.student? %>
-                        <h3>Student</h3>
-                    <%else%>
-                        <h3>Tutor<h3>
-                    <% end %>   
-                    <h3>Subjects:<% user.subjects.each do |i| %></h3>
-                        <p><%= i[:name] %></p>    
+                <div>
+                <%= link_to(user_profile_path(user)) do %>
+                    <figure>
+                        <%= image_tag user.image if user.image.attached? %>
+                    </figure>
+                    <section>
+                        <h3><%= user.name %></h3>
+                        <% if user.student? %>
+                            <h3>Student</h3>
+                        <%else%>
+                            <h3>Tutor<h3>
+                        <% end %>   
                     <% end %>
-                </section>
-            </div>    
-            <% end %>
-  </div>
+                        <h3>Subjects:<% user.subjects.each do |i| %></h3>
+                            <p><%= i[:name] %></p>    
+                        <% end %>
+                    </section>
+                </div>      
+        <% end %>
+    </div>
 </main>
 

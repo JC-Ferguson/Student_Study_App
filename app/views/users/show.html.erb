@@ -1,4 +1,5 @@
 <main id="profile">
+  <%= render "/nav_bar" %>
   <div class="user_prof">
     <figure>
       <%= image_tag @user.image if @user.image.attached? %>
@@ -13,6 +14,9 @@
         <h3>Education Level: Special Needs</h3>
     <%else%>
         <h3>Education Level: <%= @user.education_level.capitalize  %></h3>
+    <% end %>
+    <% if @user.student? %>
+        <h3>School: <%= @user.student.school %></h3>
     <% end %>
     <h3>Subjects:<% @user.subjects.each do |i| %></h3>
         <p><%= i[:name] %></p>    
