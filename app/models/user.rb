@@ -11,4 +11,5 @@ class User < ApplicationRecord
   enum classification: {student: 0, tutor: 1 }
   enum education_level: {primary: 0 , highschool: 1, tertiary: 2, special_needs: 3}
   has_one_attached :image
+  has_many :conversations, :foreign_key => :sender_id
 end

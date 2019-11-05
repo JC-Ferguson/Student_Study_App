@@ -12,4 +12,37 @@ Rails.application.routes.draw do
   get "/users_connect/:id", to: "users#show", as: "user_profile"
   patch "/user_connect/:id", to: "users#update"
   get "/user_connect/:id/edit", to: "users#edit", as: "edit_users"
+
+  authenticated :user do
+    root 'users#index'
+  end
+
+  unauthenticated :user do
+    devise_scope :user do
+      get "/" => "devise/sessions#new"
+    end
+  end
+
+  resources :conversations do
+    resources :messages
+  end
 end
+
+# Rails.application.routes.draw do
+
+#   devise_for :users
+
+#   authenticated :user do
+#     root 'users#index'
+#   end
+
+#   unauthenticated :user do
+#     devise_scope :user do
+#       get "/" => "devise/sessions#new"
+#     end
+#   end
+
+#   resources :conversations do
+#     resources :messages
+#   end
+# end

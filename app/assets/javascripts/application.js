@@ -12,5 +12,9 @@
 //
 //= require rails-ujs
 //= require activestorage
+//= require chat
 //= require turbolinks
 //= require_tree .
+//= require private_pub
+
+
