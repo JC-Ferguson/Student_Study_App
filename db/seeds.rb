@@ -15,22 +15,34 @@ subjects_arr.each do |subject|
 end
 
 
-for i in 1..10
+for i in 1..60
     user=User.new
-    user.email="test#{i}@example.com"
-    user.name="Jurra#{i}.0"
-    user.description="Just a lad who needs a lot of help"
+    user.email= Faker::Internet.unique.email
+    user.name=Faker::Name.name 
+    user.description=Faker::Lorem.paragraph
     user.password="testing"
     user.password_confirmation="testing"
-    user.classification=rand(0..1)
-    user.education_level=rand(0..3)
+    if i <=40
+        user.classification= 0
+    else
+        user.classification=1
+    end
+    if i.between?(1,10) || i.between?(41,45)
+        user.education_level= 0
+    elsif i.between?(11,20) || i.between?(46,50)
+        user.education_level=1
+    elsif i.between?(21,30) || i.between?(51,55)
+        user.education_level=2
+    elsif i.between?(31,40) || i.between?(56,60)
+        user.education_level=3
+    end  
     # user.image.attach(io: File.open("app/assets/images/home/students_pic.jpg") ,filename: "students_pic.jpg")
     user.save
     puts "user #{i} created as #{user.classification}"
 
 
     if user.student?
-        Student.create(school:"Coder Academy", user_id: i, looking_for: rand(0..2))
+        Student.create(school: Faker::University.name, user_id: i, looking_for: rand(0..2))
         puts "Student details updated"
     else
         Tutor.create(price: rand(2000..8000), user_id: i)

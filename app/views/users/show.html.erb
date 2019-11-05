@@ -2,7 +2,13 @@
   <%= render "/nav_bar" %>
   <div class="user_prof">
     <figure>
-      <%= image_tag @user.image if @user.image.attached? %>
+      <% if @user.image.attached? %>
+        <%= image_tag @user.image %>
+      <% elsif @user.student? %>
+        <%= image_tag("student_default.png") %>
+      <% else  %>
+        <%= image_tag("tutor_default.jpg") %>
+      <% end %>
     </figure>
     <div class="name_titles">
       <h1><%= @user.name %></h1>

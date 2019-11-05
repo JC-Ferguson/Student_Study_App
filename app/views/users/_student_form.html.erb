@@ -1,0 +1,15 @@
+<%= form_with model: student,  local: true do |form| %>
+     <div>
+        <%= form.label :school %>
+        <%= form.text_field :school %>
+    </div>
+     <div>
+        <%= form.label :looking_for, "Tutors"   %>
+        <%= form.radio_button :looking_for, "tutors" %>
+        <%= form.label :looking_for, "Study Group" %>
+        <%= form.radio_button :looking_for, "study_group" %>
+        <%= form.label :looking_for, "Both" %>
+        <%= form.radio_button :looking_for, "both" %>
+    </div>
+    <%= form.submit %>
+<% end %>

@@ -1,0 +1,13 @@
+#new_user{
+    .optionals {
+        visibility: hidden;
+        position: absolute;
+    }
+
+    .student_button:checked+.optionals {
+        visibility: visible;
+        position: relative;
+    }
+
+
+}

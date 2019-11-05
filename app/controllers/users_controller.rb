@@ -32,18 +32,71 @@ class UsersController < ApplicationController
     end
 
     def show
+    
         @user=User.find(params[:id]) 
     end
 
     def new
+        @user=User.new
+        @subjects=Subject.all
+        
     end
 
     def create
+        whitelisted_user_params=user_params
+        
+        if current_user.update(whitelisted_user_params) && current_user.student?
+            redirect_to new_user_student_path
+         
+        elsif current_user.update(whitelisted_user_params) && current_user.tutor?
+            redirect_to new_user_tutor_path
+        else 
+            redirect_to new_user_path
+        end
+
+        
+    end
+
+    def new_student 
+        @student=Student.new
+    end
+
+    def create_student
+        whitelisted_student_params=student_params
+        if current_user.create_student(whitelisted_student_params)
+            redirect_to root_path
+        else
+            redirect_to students_path
+        end
+    end
+
+    def new_tutor
+        @tutor=Tutor.new 
+    end
+
+    def create_tutor 
+        whitelisted_tutor_params=tutor_params
+        if current_user.create_student(whitelisted_tutor_params)
+            redirect_to root_path
+        # else
+        #     redirect_to
+        end
     end
 
     def edit
     end
 
     def update
+    end
+
+    private
+    def user_params
+        params.require(:user).permit(:name, :description, :classification, :education_level, :image, subject_ids: [])
+    end
+    def tutor_params
+        params.require(:tutor).permit(:price, :user_id)
+    end
+    def student_params
+        params.require(:student).permit(:school, :looking_for, :user_id )
     end
 end
