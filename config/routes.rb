@@ -13,8 +13,8 @@ Rails.application.routes.draw do
 
   post "/conversations", to: "conversations#create", as: "conversations"
   get "/conversations/:id", to: "conversations#show", as: "conversation"
-  post "users_connect/conversations", to: "conversations#create"
-  get "users_connect/conversations/:id", to: "conversations#show"
+  post "/users_connect/conversations", to: "conversations#create"
+  get "/users_connect/conversations/:id", to: "conversations#show"
 
   resources :conversations do
     resources :messages
