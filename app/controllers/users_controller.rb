@@ -85,11 +85,10 @@ class UsersController < ApplicationController
                     currency: 'aud',
                     quantity: 1,
                 }],
-                success_url: root_url + "verify_tutor/success",
+                success_url: root_url + "payment/success",
                 cancel_url: root_url + "users_connect/new_tutor",
                 )
                 @session_id=session.id
-            # redirect_to 
         else
             redirect_to tutors_path
         end
@@ -99,7 +98,7 @@ class UsersController < ApplicationController
     end
 
     def update
-    end
+    end 
 
     private
     def user_params

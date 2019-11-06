@@ -12,4 +12,7 @@ Rails.application.routes.draw do
   get "/users_connect/:id", to: "users#show", as: "user_profile"
   patch "/user_connect/:id", to: "users#update"
   get "/user_connect/:id/edit", to: "users#edit", as: "edit_users"
+
+  get "/payment/success", to: "payments#success", as: "successful_payment"
+  post "/payment/webhook", to: "payments#webhook", as: "verification"
 end
