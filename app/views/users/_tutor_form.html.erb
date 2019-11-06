@@ -1,4 +1,5 @@
-<%= form_with model: student, local: true do |form| %>
-    
+<%= form_with model: tutor, local: true do |form| %>
+    <%= form.label :price, "Price (in cents)" %>
+    <%= form.number_field :price, min: 0 %>
     <%= form.submit %>
 <% end %>

@@ -46,10 +46,10 @@ class UsersController < ApplicationController
         whitelisted_user_params=user_params
         
         if current_user.update(whitelisted_user_params) && current_user.student?
-            redirect_to new_user_student_path
+            redirect_to students_path
          
         elsif current_user.update(whitelisted_user_params) && current_user.tutor?
-            redirect_to new_user_tutor_path
+            redirect_to tutors_path
         else 
             redirect_to new_user_path
         end
@@ -76,10 +76,22 @@ class UsersController < ApplicationController
 
     def create_tutor 
         whitelisted_tutor_params=tutor_params
-        if current_user.create_student(whitelisted_tutor_params)
-            redirect_to root_path
-        # else
-        #     redirect_to
+        if current_user.create_tutor(whitelisted_tutor_params)
+            session = Stripe::Checkout::Session.create(
+                payment_method_types: ['card'],
+                line_items: [{
+                    name: current_user.name,
+                    amount: 500,
+                    currency: 'aud',
+                    quantity: 1,
+                }],
+                success_url: root_url + "verify_tutor/success",
+                cancel_url: root_url + "users_connect/new_tutor",
+                )
+                @session_id=session.id
+            # redirect_to 
+        else
+            redirect_to tutors_path
         end
     end
 

@@ -1,0 +1,10 @@
+<script src="https://js.stripe.com/v3/"></script>
+
+<script>
+        const stripe = Stripe("<%= Rails.application.credentials.dig(:stripe, :public) %>");
+        
+        stripe.redirectToCheckout({
+          sessionId: "<%= @session_id %>"
+        });
+    
+</script>
