@@ -70,3 +70,5 @@ gem "faker", "~> 2.6"
 gem "private_pub", "~> 1.0"
 
 gem "thin", "~> 1.7"
+
+gem "jquery-rails", "~> 4.3"

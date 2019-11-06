@@ -46,10 +46,10 @@ class UsersController < ApplicationController
         whitelisted_user_params=user_params
         
         if current_user.update(whitelisted_user_params) && current_user.student?
-            redirect_to new_user_student_path
+            redirect_to students_path
          
         elsif current_user.update(whitelisted_user_params) && current_user.tutor?
-            redirect_to new_user_tutor_path
+            redirect_to tutors_path
         else 
             redirect_to new_user_path
         end

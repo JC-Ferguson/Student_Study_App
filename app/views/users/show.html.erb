@@ -12,6 +12,9 @@
     </figure>
     <div class="name_titles">
       <h1><%= @user.name %></h1>
+      <h3>
+        <%= link_to "Send Message", "#", class: "btn btn-success btn-xs start-conversation", "data-sid" => current_user.id, "data-rip" => @user.id %>
+      </h3>
     </div>
   </div>
   <div class="user_info">

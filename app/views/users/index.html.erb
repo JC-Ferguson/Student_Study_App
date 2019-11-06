@@ -30,10 +30,6 @@
                         <h3>Subjects:<% user.subjects.each do |i| %></h3>
                             <p><%= i[:name] %></p>    
                         <% end %>
-                        <h3>
-                            <%= link_to "Send Message", "#", class: "btn btn-success btn-xs start-conversation",
-                                "data-sid" => current_user.id, "data-rip" => user.id %>
-                        </h3>
                     </section>
                 </div>      
         <% end %>
