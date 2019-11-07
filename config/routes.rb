@@ -2,6 +2,9 @@ Rails.application.routes.draw do
   devise_for :users
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   get "/", to: "pages#home", as: "root"
+  resources :conversations do
+    resources :messages
+  end
   get "/users_connect", to: "users#index", as: "users"
   post "/users_connect", to: "users#create"
   get "/users_connect/new", to: "users#new", as: "new_user"
@@ -16,4 +19,8 @@ Rails.application.routes.draw do
 
   get "/payment/success", to: "payments#success", as: "successful_payment"
   post "/payment/webhook", to: "payments#webhook", as: "verification"
+
+  resources :conversations do
+    resources :messages
+  end
 end
