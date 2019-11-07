@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_06_043250) do
+ActiveRecord::Schema.define(version: 2019_11_07_002716) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,8 +38,8 @@ ActiveRecord::Schema.define(version: 2019_11_06_043250) do
 
   create_table "availabilities", force: :cascade do |t|
     t.string "day"
-    t.time "start_time"
-    t.time "end_time"
+    t.integer "start_time"
+    t.integer "end_time"
   end
 
   create_table "availability_tutors", force: :cascade do |t|
@@ -56,14 +56,6 @@ ActiveRecord::Schema.define(version: 2019_11_06_043250) do
     t.datetime "updated_at", null: false
     t.index ["recipient_id"], name: "index_conversations_on_recipient_id"
     t.index ["sender_id"], name: "index_conversations_on_sender_id"
-  end
-
-  create_table "create_users", force: :cascade do |t|
-    t.string "name"
-    t.string "education_level"
-    t.text "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "messages", force: :cascade do |t|

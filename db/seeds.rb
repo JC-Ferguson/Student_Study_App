@@ -9,9 +9,18 @@ subjects_arr=[  "Chemistry", "Physics", "Biology", "History", "Geography", "Comm
                 "Chinese", "French", "German", "Indonesian", "Italian", "Japanese", "IT", "Design Technology", "Home Economics", 
                 "English", "Maths", "PD/H/PE" ]
 
+availabilities_arr= [  
+                        "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
+]
+
 subjects_arr.each do |subject|
     Subject.create(name: "#{subject}")
     puts "#{subject} subject generated."
+end
+
+availabilities_arr.each do |day|
+    Availability.create(day: "#{day}")
+    puts "#{day} generated"
 end
 
 
@@ -47,6 +56,12 @@ for i in 1..60
     else
         Tutor.create(price: rand(2000..8000), user_id: i)
         puts "Tutor Details updated"
+        for i in 1..rand(1..3)
+            availability=Availability.find(rand(1..7))
+            availability.update(start_time:"rand(8..14):00:00", end_time:"rand(15..20):00:00")
+            AvailabilityTutor.create(tutor_id:user.tutor.id, availability_id:availability.id)
+            puts "Tutor #{user.tutor.id} created with availability on #{availability.day} at #{availability.start_time} until #{availability.end_time}"
+        end
     end
 
     SubjectUser.create(subject_id: 17, user_id: i)

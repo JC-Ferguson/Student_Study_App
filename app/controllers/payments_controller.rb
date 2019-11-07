@@ -4,7 +4,6 @@ class PaymentsController < ApplicationController
 
     def webhook
         puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-        byebug
         puts params
         puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
     end

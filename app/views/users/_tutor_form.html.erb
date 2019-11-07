@@ -1,5 +1,10 @@
 <%= form_with model: tutor, local: true do |form| %>
-    <%= form.label :price, "Price (in cents)" %>
+    <%= form.label :price, "Price" %>
     <%= form.number_field :price, min: 0 %>
+    <%= form.collection_check_boxes :availabilities_ids, availabilities, :id, :day %>
+    <%= form.label :start_time, "Starting Availability" %>
+    <%= form.number_field :start_time, min: 0, max:23 %>
+    <%= form.label :end_time, "Ending Availability" %>
+    <%= form.number_field :end_time, min: 0, max:23 %>
     <%= form.submit %>
 <% end %>

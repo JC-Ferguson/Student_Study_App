@@ -1,16 +1,20 @@
 class UsersController < ApplicationController
-    before_action :authenticate_user!
+    before_action :translate_params, only: [:create_tutor, :update_tutor]
+    before_action :set_user, only: [:show]
+    before_action :authenticate_user!, only: [:show, :new, :create, :edit, :update, :destroy] 
 
 
     def index
-        if current_user.student? && current_user.student.looking_for=="tutors"
-            users=User.where(classification: 1, education_level: current_user.education_level)
+        if user_signed_in? == false
+            return @users=User.all
         elsif current_user.student? && current_user.student.looking_for=="study_group"
             users=User.where(classification: 0, education_level: current_user.education_level)
         elsif current_user.student? && current_user.student.looking_for=="both"
             users=User.where(education_level: current_user.education_level)
         elsif current_user.tutor?
             users=User.where(classification: 0, education_level: current_user.education_level)
+        elsif current_user.student? && current_user.student.looking_for=="tutors"
+            users=User.where(classification: 1, education_level: current_user.education_level)
         end
         common_users=[]
         current_user_subjects=current_user.subjects
@@ -33,7 +37,7 @@ class UsersController < ApplicationController
 
     def show
     
-        @user=User.find(params[:id]) 
+        # @user=User.find(params[:id]) 
     end
 
     def new
@@ -72,6 +76,7 @@ class UsersController < ApplicationController
 
     def new_tutor
         @tutor=Tutor.new 
+        @availabilities=Availability.all
     end
 
     def create_tutor 
@@ -104,10 +109,20 @@ class UsersController < ApplicationController
     def user_params
         params.require(:user).permit(:name, :description, :classification, :education_level, :image, subject_ids: [])
     end
+
     def tutor_params
-        params.require(:tutor).permit(:price, :user_id)
+        params.require(:tutor).permit(:price, :user_id, availabilities_id: [])
     end
+
     def student_params
         params.require(:student).permit(:school, :looking_for, :user_id )
+    end
+
+    def translate_params
+        params[:tutor][:price] = (params[:tutor][:price].to_f * 100).to_i
+    end
+
+    def set_user
+        @user=User.find(params[:id]) 
     end
 end

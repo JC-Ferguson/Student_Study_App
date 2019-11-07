@@ -1,5 +1,7 @@
 <main id="connect">
-    <%= render "/nav_bar" %>
+    <% if user_signed_in? %>
+        <%= render "/nav_bar" %>
+    <%end%>
     <h1>SSC</h1>
     <h2>Connecting You</h2>
     <form action="<%= users_path %>" method="GET">
