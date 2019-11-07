@@ -12,6 +12,10 @@
     </figure>
     <div class="name_titles">
       <h1><%= @user.name %></h1>
+      <%if current_user.id==@user.id%>
+      <h5><%= link_to "Edit", new_user_path %></h5>
+     
+      <%end%>
     </div>
   </div>
   <div class="user_info">

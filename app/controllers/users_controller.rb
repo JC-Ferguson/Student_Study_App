@@ -36,14 +36,11 @@ class UsersController < ApplicationController
     end
 
     def show
-    
-        # @user=User.find(params[:id]) 
     end
 
     def new
         @user=User.new
         @subjects=Subject.all
-        
     end
 
     def create
@@ -100,10 +97,23 @@ class UsersController < ApplicationController
     end
 
     def edit
+        @subjects=Subject.all
     end
 
-    def update
+    def update            
+        if current_user.update(user_params) && current_user.student?
+            redirect_to edit_students_path
+         
+        elsif current_user.update(user_params) && current_user.tutor?
+            redirect_to edit_tutors_path
+        else 
+            redirect_to user_profile_path(params[:id])
+        end
     end 
+
+    def destroy
+        @user.destroy
+    end
 
     private
     def user_params
@@ -111,7 +121,7 @@ class UsersController < ApplicationController
     end
 
     def tutor_params
-        params.require(:tutor).permit(:price, :user_id, availabilities_id: [])
+        params.require(:tutor).permit(:price, :user_id) # :availability_tutors_start_time, :availability_tutors_end_time, availability_ids: [] )
     end
 
     def student_params

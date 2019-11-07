@@ -58,7 +58,7 @@ for i in 1..60
         puts "Tutor Details updated"
         for i in 1..rand(1..3)
             availability=Availability.find(rand(1..7))
-            availability.update(start_time:"rand(8..14):00:00", end_time:"rand(15..20):00:00")
+            availability.update(start_time:rand(8..14), end_time:rand(15..20))
             AvailabilityTutor.create(tutor_id:user.tutor.id, availability_id:availability.id)
             puts "Tutor #{user.tutor.id} created with availability on #{availability.day} at #{availability.start_time} until #{availability.end_time}"
         end
