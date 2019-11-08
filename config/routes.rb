@@ -10,10 +10,12 @@ Rails.application.routes.draw do
   get "/users_connect/new_tutor", to: "users#new_tutor", as: "tutors"
   post "/users_connect/new_tutor", to: "users#create_tutor"
   get "/users_connect/:id", to: "users#show", as: "user_profile"
-  patch "/user_connect/:id", to: "users#update"
-  get "/user_connect/:id/edit", to: "users#edit", as: "edit_user"
-  delete "/users_connect/:id", to: "users#destroy"
+  get "/user_connect/:id/edit_student", to: "users#edit_student", as: "edit_student"
+  patch "/user_connect/:id/edit_student", to: "users#update_student", as: "student"
+  get "/user_connect/:id/edit_tutor", to: "users#edit_tutor", as: "edit_tutor"
+  patch "/user_connect/:id/edit_tutor", to: "users#update_tutor", as: "tutor"
+  
 
-  get "/payment/success", to: "payments#success", as: "successful_payment"
-  post "/payment/webhook", to: "payments#webhook", as: "verification"
+  get "/payments/success", to: "payments#success", as: "successful_payment"
+  post "/payments/webhook", to: "payments#webhook", as: "verification"
 end

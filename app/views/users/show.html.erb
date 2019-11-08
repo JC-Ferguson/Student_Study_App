@@ -11,30 +11,52 @@
       <% end %>
     </figure>
     <div class="name_titles">
+      <div class="name_edit">
       <h1><%= @user.name %></h1>
-      <%if current_user.id==@user.id%>
-      <h5><%= link_to "Edit", new_user_path %></h5>
-     
-      <%end%>
+        <%if current_user.id==@user.id%>
+          <h5><%= link_to 'Edit Profile', edit_user_registration_path %></h5>
+          <%if current_user.student?%>
+            <h5><%= link_to 'Update '+ current_user.classification.capitalize+ " Details", edit_student_path %></h5>
+          <%else%>
+            <h5><%= link_to 'Update '+ current_user.classification.capitalize+ " Details", edit_tutor_path %></h5>
+          <%end%>
+        <%end%>
+      </div>
+      <div>
+        <h4><%= @user.email %></h4>
+      </div>
     </div>
   </div>
   <div class="user_info">
-    <h3><%= @user.description %></h3>
-    <%if @user.special_needs?%>
-        <h3>Education Level: Special Needs</h3>
-    <%else%>
-        <h3>Education Level: <%= @user.education_level.capitalize  %></h3>
-    <% end %>
-    <% if @user.student? %>
-        <h3>School: <%= @user.student.school %></h3>
-    <% end %>
-    <h3>Subjects:<% @user.subjects.each do |i| %></h3>
-        <p><%= i[:name] %></p>    
-    <% end %>
-    <% if @user.tutor? %>
-        <h3>Price: <%= number_to_currency(@user.tutor.price / 100.0) %></h3>
-    <% end %>
-    <h3>Contact</h3>
-    <h4>email: <%= @user.email %></h4>
+    <div>
+      <h3>Bio</h3>
+      <p><%= @user.description %></p>
+      <%if @user.special_needs?%>
+          <h3>Education Level: Special Needs</h3>
+      <%else%>
+          <h3>Education Level: <%= @user.education_level.capitalize  %></h3>
+      <% end %>
+      <% if @user.student? %>
+          <h3>School: <%= @user.student.school %></h3>
+      <% end %>
+      <h3>Subjects:<% @user.subjects.each do |i| %></h3>
+          <p><%= i[:name] %></p>    
+      <% end %>
+      <%if @user.tutor? && @user.tutor.qualifications.attached?%>
+      <h3>Qualifications</h3>
+      <%= link_to "download", rails_blob_path(@user.tutor.qualifications, disposition: 'attachment') %>
+      <% end %>
+    </div>
+    <div>  
+      <% if @user.tutor? %>
+          <h3>Price Per Lesson: <%= number_to_currency(@user.tutor.price / 100.0) %></h3>
+      <% end %>
+      <%if @user.tutor?%>
+      <h3>Availability</h3>
+      <%@user.tutor.availabilities.each do |x|%>
+      <p><%= x[:day] %></p>
+      <%end%>
+      <%end%>
+    </div>
   </div>
 </main>

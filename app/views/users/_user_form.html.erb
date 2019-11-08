@@ -1,4 +1,4 @@
-<%= form_with model: user, local: true do |form| %>
+<%= form_with model: user, mathod: :patch, local: true do |form| %>
     <div>
         <%= form.label :name %>
         <%= form.text_field :name %>

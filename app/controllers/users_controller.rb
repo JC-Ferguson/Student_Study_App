@@ -2,11 +2,20 @@ class UsersController < ApplicationController
     before_action :translate_params, only: [:create_tutor, :update_tutor]
     before_action :set_user, only: [:show]
     before_action :authenticate_user!, only: [:show, :new, :create, :edit, :update, :destroy] 
+    before_action :set_tutor, only: [:edit_tutor, :update_tutor]
+    before_action :set_student, only: [:edit_student, :update_student]
 
 
     def index
+        common_users=[]
         if user_signed_in? == false
-            return @users=User.all
+            users=User.all
+            users.each do |user|
+                unless user.tutor? && user.tutor.payment_id.nil?
+                    common_users.push(user) 
+                end
+            end
+            return @users=common_users
         elsif current_user.student? && current_user.student.looking_for=="study_group"
             users=User.where(classification: 0, education_level: current_user.education_level)
         elsif current_user.student? && current_user.student.looking_for=="both"
@@ -16,9 +25,12 @@ class UsersController < ApplicationController
         elsif current_user.student? && current_user.student.looking_for=="tutors"
             users=User.where(classification: 1, education_level: current_user.education_level)
         end
-        common_users=[]
+        
         current_user_subjects=current_user.subjects
         users.each do |user|
+            if user.tutor? && user.tutor.payment_id.nil?
+                next
+            end
             user_subjects=user.subjects
             for courses in user_subjects
                 if common_users.include?(user)
@@ -26,7 +38,7 @@ class UsersController < ApplicationController
                 end
                 current_user_subjects.each do |my_course|
                     if courses[:name]==my_course[:name] && common_users.include?(user)==false
-                        common_users.push(user)
+                        common_users.push(user) 
                         break
                     end
                 end
@@ -80,15 +92,20 @@ class UsersController < ApplicationController
         whitelisted_tutor_params=tutor_params
         if current_user.create_tutor(whitelisted_tutor_params)
             session = Stripe::Checkout::Session.create(
-                payment_method_types: ['card'],
-                line_items: [{
-                    name: current_user.name,
-                    amount: 500,
-                    currency: 'aud',
-                    quantity: 1,
-                }],
-                success_url: root_url + "payment/success",
-                cancel_url: root_url + "users_connect/new_tutor",
+                    payment_method_types: ['card'],
+                    line_items: [{
+                        name: current_user.name,
+                        amount: 500,
+                        currency: 'aud',
+                        quantity: 1,
+                    }],
+                    payment_intent_data: {
+                        metadata: {
+                            user_id: current_user.id
+                        }
+                    },
+                    success_url: root_url + "payments/success",
+                    cancel_url: root_url + "users_connect/new_tutor",
                 )
                 @session_id=session.id
         else
@@ -96,23 +113,30 @@ class UsersController < ApplicationController
         end
     end
 
-    def edit
-        @subjects=Subject.all
+    def edit_student
+        @student=Student.find(params[:id])
     end
 
-    def update            
-        if current_user.update(user_params) && current_user.student?
-            redirect_to edit_students_path
-         
-        elsif current_user.update(user_params) && current_user.tutor?
-            redirect_to edit_tutors_path
-        else 
-            redirect_to user_profile_path(params[:id])
+    def update_student
+        if current_user.student?
+            if @student.update(student_params)
+                redirect_to user_profile_path(current_user.id)
+            else
+                redirect_to edit_student_path
+            end
         end
     end 
 
-    def destroy
-        @user.destroy
+    def edit_tutor
+        @availabilities=Availability.all
+    end
+
+    def update_tutor
+        if @tutor.update(tutor_params)
+            redirect_to user_profile_path(current_user.id)
+        else
+            redirect_to edit_tutor_path
+        end
     end
 
     private
@@ -121,7 +145,7 @@ class UsersController < ApplicationController
     end
 
     def tutor_params
-        params.require(:tutor).permit(:price, :user_id) # :availability_tutors_start_time, :availability_tutors_end_time, availability_ids: [] )
+        params.require(:tutor).permit(:price, :user_id, :qualifications, availability_ids: []) # :availability_tutors_start_time, :availability_tutors_end_time, availability_ids: [] )
     end
 
     def student_params
@@ -134,5 +158,13 @@ class UsersController < ApplicationController
 
     def set_user
         @user=User.find(params[:id]) 
+    end
+
+    def set_tutor
+        @tutor=current_user.tutor
+    end
+
+    def set_student
+        @student=current_user.student
     end
 end

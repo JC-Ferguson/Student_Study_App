@@ -1,8 +1,41 @@
 <h2>Sign up</h2>
-
+<% @subjects=Subject.all %>
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
 
+    <div>
+        <%= f.label :name %>
+        <%= f.text_field :name %>
+    </div>
+    <div>
+        <%= f.label :description %>
+        <%= f.text_area :description %>
+    </div>
+    <div>
+        <%= f.label :image %>
+        <%= f.file_field :image, accept: "image/png,image/gif,image/jpeg,image/jpg" %>
+    </div>
+    <div>
+        <%= f.label :classification, "Student"   %>
+        <%= f.radio_button :classification, "student" %>
+        <%= f.label :classification, "Tutor" %>
+        <%= f.radio_button :classification, "tutor" %>
+    </div>
+    <div>
+        <h3>Education Level</h3>
+        <%= f.label :education_level, "Primary" %>
+        <%= f.radio_button :education_level, "primary" %>
+        <%= f.label :education_level, "Highschool" %>
+        <%= f.radio_button :education_level, "highschool" %>
+        <%= f.label :education_level, "Tertiary" %>
+        <%= f.radio_button :education_level, "tertiary" %>
+        <%= f.label :education_level, "Special Needs" %>
+        <%= f.radio_button :education_level, "special_needs" %>
+    </div>
+    <div>
+        <h3>Subjects</h3>
+        <%= f.collection_check_boxes :subject_ids, @subjects, :id, :name %>
+    </div>
   <div class="field">
     <%= f.label :email %><br />
     <%= f.email_field :email, autofocus: true, autocomplete: "email" %>

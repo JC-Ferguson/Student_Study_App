@@ -13,7 +13,7 @@ availabilities_arr= [
                         "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
 ]
 
-subjects_arr.each do |subject|
+subjects_arr.sort!.each do |subject|
     Subject.create(name: "#{subject}")
     puts "#{subject} subject generated."
 end
@@ -56,12 +56,11 @@ for i in 1..60
     else
         Tutor.create(price: rand(2000..8000), user_id: i)
         puts "Tutor Details updated"
-        for i in 1..rand(1..3)
-            availability=Availability.find(rand(1..7))
-            availability.update(start_time:rand(8..14), end_time:rand(15..20))
-            AvailabilityTutor.create(tutor_id:user.tutor.id, availability_id:availability.id)
-            puts "Tutor #{user.tutor.id} created with availability on #{availability.day} at #{availability.start_time} until #{availability.end_time}"
-        end
+        # for i in 1..rand(1..3)
+        #     availability=Availability.find(rand(1..7))
+        #     at=AvailabilityTutor.create(tutor_id:user.tutor.id, availability_id:availability.id, start_time:rand(8..13), end_time:rand(14..19))
+        #     puts "Tutor #{user.tutor.id} created with availability on #{availability.day} at #{at.start_time} until #{at.end_time}"
+        # end
     end
 
     SubjectUser.create(subject_id: 17, user_id: i)
@@ -69,4 +68,5 @@ for i in 1..60
     SubjectUser.create(subject_id: 21, user_id: i)
     SubjectUser.create(subject_id: rand(1..8), user_id: i)
     SubjectUser.create(subject_id: rand(8..16), user_id: i)
+    puts "Subjects created for user #{i}"
 end
