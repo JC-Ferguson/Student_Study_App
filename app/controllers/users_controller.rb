@@ -11,12 +11,12 @@ class UsersController < ApplicationController
         common_users=[]
         if user_signed_in? == false
             users=User.all
-            # users.each do |user|
-            #     unless user.tutor? && user.tutor.payment_id.nil?
-            #         common_users.push(user) 
-            #     end
-            # end
-            # return @users=common_users
+            users.each do |user|
+                unless user.tutor? && user.tutor.payment_id.nil?
+                    common_users.push(user) 
+                end
+            end
+            return @users=common_users
         elsif current_user.student? && current_user.student.looking_for=="study_group"
             users=User.where(classification: 0, education_level: current_user.education_level)
         elsif current_user.student? && current_user.student.looking_for=="both"
