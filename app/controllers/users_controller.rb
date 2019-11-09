@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
     before_action :translate_params, only: [:create_tutor, :update_tutor]
     before_action :set_user, only: [:show]
-    before_action :authenticate_user!, only: [:show, :new, :create, :edit, :update, :destroy] 
+    before_action :authenticate_user!, only: [:show, :new, :create, :edit_student, :edit_tutor, :update_student, :update_tutor ] 
     before_action :set_tutor, only: [:edit_tutor, :update_tutor]
     before_action :set_student, only: [:edit_student, :update_student]
 
@@ -37,7 +37,7 @@ class UsersController < ApplicationController
                     break
                 end
                 current_user_subjects.each do |my_course|
-                    if courses[:name]==my_course[:name] && common_users.include?(user)==false
+                    if courses[:name]==my_course[:name] && user.id!=current_user.id
                         common_users.push(user) 
                         break
                     end
@@ -50,25 +50,25 @@ class UsersController < ApplicationController
     def show
     end
 
-    def new
-        @user=User.new
-        @subjects=Subject.all
-    end
+    # def new
+    #     @user=User.new
+    #     @subjects=Subject.all
+    # end
 
-    def create
-        whitelisted_user_params=user_params
+    # def create
+    #     whitelisted_user_params=user_params
         
-        if current_user.update(whitelisted_user_params) && current_user.student?
-            redirect_to students_path
+    #     if current_user.update(whitelisted_user_params) && current_user.student?
+    #         redirect_to students_path
          
-        elsif current_user.update(whitelisted_user_params) && current_user.tutor?
-            redirect_to tutors_path
-        else 
-            redirect_to new_user_path
-        end
+    #     elsif current_user.update(whitelisted_user_params) && current_user.tutor?
+    #         redirect_to tutors_path
+    #     else 
+    #         redirect_to new_user_path
+    #     end
 
         
-    end
+    # end
 
     def new_student 
         @student=Student.new
@@ -114,7 +114,6 @@ class UsersController < ApplicationController
     end
 
     def edit_student
-        @student=Student.find(params[:id])
     end
 
     def update_student

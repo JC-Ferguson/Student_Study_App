@@ -11,6 +11,7 @@
 
         figure {
             height:60vh;
+            text-align:center;
 
             img {
                 max-width: 100%;
@@ -24,19 +25,21 @@
 
             .name_edit {
                 display: flex;
-                justify-content: space-between;
+                justify-content: space-around;
             }
         }
     }
 
     .user_info {
         display:flex;
-        justify-content: space-evenly;
+        justify-content: space-between;
         padding-left: 30px;
+        width: 50vw;
 
-        div{
-            padding: 0 30px;
-        }
+    }
+
+    .back{
+        align-self: flex-end;
     }
 }
   

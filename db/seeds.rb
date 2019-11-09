@@ -49,6 +49,12 @@ for i in 1..60
     user.save
     puts "user #{i} created as #{user.classification}"
 
+    SubjectUser.create(subject_id: 17, user_id: i)
+    SubjectUser.create(subject_id: 20, user_id: i)
+    SubjectUser.create(subject_id: 21, user_id: i)
+    SubjectUser.create(subject_id: rand(1..8), user_id: i)
+    SubjectUser.create(subject_id: rand(8..16), user_id: i)
+    puts "Subjects created for user #{i}"
 
     if user.student?
         Student.create(school: Faker::University.name, user_id: i, looking_for: rand(0..2))
@@ -63,10 +69,5 @@ for i in 1..60
         # end
     end
 
-    SubjectUser.create(subject_id: 17, user_id: i)
-    SubjectUser.create(subject_id: 20, user_id: i)
-    SubjectUser.create(subject_id: 21, user_id: i)
-    SubjectUser.create(subject_id: rand(1..8), user_id: i)
-    SubjectUser.create(subject_id: rand(8..16), user_id: i)
-    puts "Subjects created for user #{i}"
+
 end

@@ -1,10 +1,12 @@
 <main id="home">
-  <%= render "/nav_bar" %>
+  <% if user_signed_in? %> 
+    <%= render "/nav_bar" %>
+  <% end %>
   <div>
     <h1>Home</h1>
     <h1>Student Study Connect</h1>
     <p>
-        Welcome, <%= current_user.name %>
+        Welcome, <%= current_user.name if user_signed_in? %>
     </p>
     <p class="about">
         Student Study Connect has the primary goal of connecting students with other
@@ -16,8 +18,10 @@
     <%= link_to(users_path) do %>
     <div><h2>Connect</h2></div>
     <% end %>
-    <%= link_to(user_profile_path(current_user)) do %>
-    <div><h2>Profile</h2></div>
+    <% if user_signed_in? %>
+      <%= link_to(user_profile_path(current_user)) do %>
+      <div><h2>Profile</h2></div>
+      <% end %>
     <% end %>
   </div>  
 </main>

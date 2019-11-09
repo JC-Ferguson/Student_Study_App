@@ -6,10 +6,10 @@ class ApplicationController < ActionController::Base
 
     private
     def after_sign_in_path_for(resource)
-        if current_user.student?
+        if current_user.student? && current_user.student.looking_for.nil?
             students_path
-        else
-            tutors_path
+        elsif current_user.tutor? && current_user.tutor.payment_id.nil?
+            tutors_path 
         end
      
     end
