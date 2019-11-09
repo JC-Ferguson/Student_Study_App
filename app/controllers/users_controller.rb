@@ -12,7 +12,9 @@ class UsersController < ApplicationController
         if user_signed_in? == false
             users=User.all
             users.each do |user|
-                unless user.tutor? && user.tutor.payment_id.nil?
+                if user.tutor? && user.tutor.payment_id==nil
+                    next
+                else
                     common_users.push(user) 
                 end
             end
