@@ -1,9 +1,9 @@
 <main>
-    <h1>Editing Page</h1>
+    <h1>Update Tutor Details</h1>
     <%= form_with model: @student, method: :patch,  local: true do |form| %>
      <div>
         <%= form.label :school %>
-        <%= form.text_field :school %>
+        <%= form.text_field :school, required: true %>
     </div>
     <div>
         <%= form.label :looking_for, "Tutors"   %>
@@ -15,4 +15,5 @@
     </div>
     <%= form.submit %>
 <% end %>
+<%= link_to "Back", :back %>
 </main>

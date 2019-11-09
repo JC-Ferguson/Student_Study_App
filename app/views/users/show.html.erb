@@ -54,7 +54,7 @@
       <%if @user.tutor?%>
       <h3>Availability</h3>
       <%@user.tutor.availabilities.each do |x|%>
-      <p><%= x[:day] %></p>
+      <p><%= x[:day] %>: <%=@tutor_times.where(availability_id:x.id)[0][:start_time]%>00 - <%=@tutor_times.where(availability_id:x.id)[0][:end_time]%>00 </p>
       <%end%>
       <%end%>
     </div>

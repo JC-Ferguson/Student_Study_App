@@ -1,13 +1,35 @@
+<main>
+<h1>Update Tutor Details</h1>
 <%= form_with model: @tutor, method: :patch, local: true do |form| %>
-    <%= form.label :price, "Price $" %>
-    <%= form.number_field :price, min: 0 %>
-    <%= form.collection_check_boxes :availability_ids, @availabilities, :id, :day %>
-    <%= form.label :availability_tutors_start_time, "Starting Availability" %>
-    <%= form.number_field :availability_tutors_start_time, min: 0, max:23 %>
-    <%= form.label :availability_tutors_end_time, "Ending Availability" %>
-    <%= form.number_field :availability_tutors_end_time, min: 0, max:23 %>
-    <%= form.label :qualifications %>
-    <%= form.file_field :qualifications %>
-    <%= form.submit %>
+    <div>
+        <section>
+            <h4>Price Per Lesson</h4>
+            <%= form.label :price, "$" %>
+            <%= form.number_field :price, min: 0, required: true %>
+        </section>
+        <section>
+            <h4>Availability</h4>
+            <%= form.collection_check_boxes :availability_ids, @availabilities, :id, :day%>
+        </section>
+        <section>
+            <%= form.label :availability_tutors_start_time, "Starting Availability" %>
+            <%= form.number_field :availability_tutors_start_time, min: 0, max:23 %>
+        </section>
+        <section>
+            <%= form.label :availability_tutors_end_time, "Ending Availability" %>
+            <%= form.number_field :availability_tutors_end_time, min: 0, max:23 %>
+        </section>
+        <section>
+            <h4>Qualifications</h4>
+            <%= form.label :qualifications,"&nbsp;".html_safe %>
+            <%= form.file_field :qualifications %>
+        </section>
+    </div>
+    <br>
+    <section>    
+        <%= form.submit %>
+    </section>
 <% end %>
+<%= link_to "Back", :back %>
+</main>
 

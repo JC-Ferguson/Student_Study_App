@@ -31,10 +31,10 @@ for i in 1..60
     user.description=Faker::Lorem.paragraph
     user.password="testing"
     user.password_confirmation="testing"
-    if i <=40
-        user.classification= 0
+    if i%3==0
+        user.classification= 1
     else
-        user.classification=1
+        user.classification=0
     end
     if i.between?(1,10) || i.between?(41,45)
         user.education_level= 0
@@ -54,19 +54,20 @@ for i in 1..60
     SubjectUser.create(subject_id: 21, user_id: i)
     SubjectUser.create(subject_id: rand(1..8), user_id: i)
     SubjectUser.create(subject_id: rand(8..16), user_id: i)
-    puts "Subjects created for user #{i}"
+    puts "Subjects created for #{user.classification}"
 
     if user.student?
-        Student.create(school: Faker::University.name, user_id: i, looking_for: rand(0..2))
+        user.create_student(school: Faker::University.name, looking_for: rand(0..2))
+        # Student.create(school: Faker::University.name, user_id: i, looking_for: rand(0..2))
         puts "Student details updated"
     else
-        Tutor.create(price: rand(2000..8000), user_id: i)
+        user.create_tutor(price: rand(2000..8000),payment_id: "meh heh")
         puts "Tutor Details updated"
-        # for i in 1..rand(1..3)
-        #     availability=Availability.find(rand(1..7))
-        #     at=AvailabilityTutor.create(tutor_id:user.tutor.id, availability_id:availability.id, start_time:rand(8..13), end_time:rand(14..19))
-        #     puts "Tutor #{user.tutor.id} created with availability on #{availability.day} at #{at.start_time} until #{at.end_time}"
-        # end
+        for i in 1..rand(1..3)
+            availability=Availability.find(rand(1..7))
+            at=AvailabilityTutor.create(tutor_id:user.tutor.id, availability_id:availability.id, start_time:rand(8..13), end_time:rand(14..19))
+            puts "Tutor #{user.tutor.id} created with availability on #{availability.day} at #{at.start_time} until #{at.end_time}"
+        end
     end
 
 
