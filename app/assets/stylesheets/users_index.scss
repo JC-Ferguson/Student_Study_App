@@ -1,20 +1,37 @@
 #connect {
     text-align:center;
+    height: 100vh;
 
     .user {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
+        height: inherit;
+        div {
+            margin: auto;
+            width: 60%;
+            height: 40%;
+            display:flex;
 
-        figure {
-            img{
-                max-width: 100%;
+            figure {
+                img{
+                    max-width: 100%;
+                }
             }
         }
+    }
+}
 
-        div {
-            width: 25%;
-        }
+  @media only screen and (min-width: 1024px) {
+      #connect{
+          .user { 
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            div{
+                width: 25%;
+                margin: 0;
+                display: block;
+            }
+          }
+
       }
   }
   

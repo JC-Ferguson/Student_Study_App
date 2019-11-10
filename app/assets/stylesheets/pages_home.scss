@@ -8,9 +8,17 @@
     height: 100vh;
 
     div{
+        h1 {
+            color: rgba(118, 54, 38, 0.85);
+            background-color: rgba(42, 49, 50,0.95); 
+        }
+
         p {
-            background-color: rgba(114, 34, 34, 0.5);
-            color: rgba(255,255,255,0.5); 
+            width: max-content;
+            margin: auto;
+            color: rgba(118, 54, 38, 0.85);
+            background-color: rgba(42, 49, 50,0.95); 
+            font-size: 1.5rem;
         }
 
         .about {
@@ -22,20 +30,57 @@
     .links {
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        justify-content: space-evenly;
         align-items: center;
+        height: 85vh;
+
+        a {
+            text-decoration: none;
+            div {
+                color: rgb(255, 255, 255);
+                background-color: rgba(0, 0, 0, 0.75);
+                height: 25vh;
+                width: 25vh;
+                border-radius: 100%;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                margin-bottom: 25px;
+                margin-top: 25px;
+
+                h2 {
+                    font-size: 3em;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 1024px) {
+    #home{
 
         div {
-            color: rgb(255, 255, 255);
-            background-color: rgba(0, 0, 0, 0.75);
-            height: 25vh;
-            width: 20vw;
-            border-radius: 100px;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            margin-bottom: 25px;
-            margin-top: 25px;
-          }
-      }
-  }
+            p {
+                font-size: 1.2rem;
+            }
+        }
+
+        .links{
+            height: 65vh;
+            align-self: center;    
+            flex-direction: row;
+            justify-content: space-evenly;
+
+               a {
+                    div {
+                    height: 35vh;
+                    width: 15vw;
+
+                        h2 {
+                            font-size: 2em;
+                        }
+                    }
+               }
+        }
+    }
+}
