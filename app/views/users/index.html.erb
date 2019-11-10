@@ -13,6 +13,7 @@
         <% @users.each do |user| %>
                 <div>
                 <%= link_to(user_profile_path(user)) do %>
+            
                     <figure>
                         <% if user.image.attached? %>
                             <%= image_tag user.image %>
