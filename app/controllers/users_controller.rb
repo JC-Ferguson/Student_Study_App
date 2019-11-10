@@ -8,14 +8,20 @@ class UsersController < ApplicationController
 
 
     def index
+        @search=params[:search]
+        sort=params[:sort]
         common_users=[]
         # conditional sets the user information that will be returned to the index page based on the current user state
         # code calls user model and based on the current user parameters returns only the information relevent to them based 
         # on whether user is at the same education level to them and whether the user is the corect classification current user is
         # searching for(student or tutor), failing that if user not signed in returns full database of users for viewing.
 
-        if user_signed_in? == false                                                     
-            users=User.all
+        if user_signed_in? == false
+            if sort=="student" || sort=="tutor"                                                     
+                users=User.where(classification: sort)
+            else
+                users=User.all
+            end
             users.each do |user|
                 if user.tutor? && user.tutor.payment_id==nil
                     next
@@ -23,11 +29,30 @@ class UsersController < ApplicationController
                     common_users.push(user) 
                 end
             end
-            return @users=common_users                                                              #if user isnt't signed in returns all users exiting method
+            
+            if @search && @search!=""
+                query=[]
+                    common_users.each do |peep| 
+                        peep.subjects.each do |s| 
+                            if s[:name]==@search.capitalize
+                                query.push(peep)
+                                break
+                            end
+                        end
+                       
+                    end
+                    return @users=query
+            else
+                return @users=common_users
+            end                                                              #if user isnt't signed in returns all users exiting method
         elsif current_user.student? && current_user.student.looking_for=="study_group"
             users=User.where(classification: 0, education_level: current_user.education_level)
         elsif current_user.student? && current_user.student.looking_for=="both"
-            users=User.where(education_level: current_user.education_level)
+            if sort=="student" || sort=="tutor"                                                     
+                users=User.where(classification: sort, education_level: current_user.education_level)
+            else
+                users=User.where(education_level: current_user.education_level)
+            end
         elsif current_user.tutor?
             users=User.where(classification: 0, education_level: current_user.education_level)
         elsif current_user.student? && current_user.student.looking_for=="tutors"
@@ -54,7 +79,21 @@ class UsersController < ApplicationController
                 end
             end
         end
-        @users=common_users                                                                         # users returned that match the current user's education level their search parameters and hs common subjects
+        if @search && @search!=""
+            query=[]
+                common_users.each do |peep| 
+                    peep.subjects.each do |s| 
+                        if s[:name]==@search.capitalize
+                            query.push(peep)
+                            break
+                        end
+                    end
+                    
+                end
+                return @users=query
+        else
+            return @users=common_users
+        end   
     end
 
     def show

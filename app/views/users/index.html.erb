@@ -4,11 +4,17 @@
     <% else %>
         <%= link_to "Login", new_user_session_path %>
     <% end %>
+    <%= link_to(users_path) do%>
     <h1>SSC</h1>
     <h2>Connecting You</h2>
-    <form action="<%= users_path %>" method="GET">
-        <input type="search" name="search" />
-    </form>
+    <%end%>
+    <%= form_with url: users_path, method: "get", local: true do |form| %>
+    <%= form.label :search %>
+    <%= form.text_field :search, value: @search%>
+    <%= form.label :sort %>
+    <%= form.select(:sort, [["All", "all"], ["Students", "student"], ["Tutors", "tutor"]]) %>
+    <%=form.submit "Search" %>
+    <%end%>
     <div class="user">
         <% @users.each do |user| %>
                 <div>
