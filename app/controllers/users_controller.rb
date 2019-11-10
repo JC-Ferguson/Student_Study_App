@@ -93,7 +93,7 @@ class UsersController < ApplicationController
         # creation of the tutor that posts all the users inputted data to the tutor same as student creation
         # conditional states if the user creates the tutor with no errors they are redirected to the payment page
         # used for tutor verification otherwise tutor form is regenerated
-        if current_user.create_tutor(whitelisted_tutor_params)
+        if current_user.create_tutor(tutor_params)
             session = Stripe::Checkout::Session.create(
                     payment_method_types: ['card'],
                     line_items: [{
