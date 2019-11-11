@@ -113,7 +113,7 @@ class UsersController < ApplicationController
         # creation of the actual student posts all the relevant data the the newly generated student
         # conditional states if the user successfully creates the student taken to the homepage otherwise 
         # student form is regenerated to input details again
-        if current_user.create_student(whitelisted_student_params)
+        if current_user.create_student(student_params)
             redirect_to root_path                                                                   
         else
             redirect_to students_path
